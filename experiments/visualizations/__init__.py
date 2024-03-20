@@ -19,13 +19,13 @@ from experiments.visualizations.plotly_theme import (
 from model.system_parameters import parameters, validator_environments
 import model.constants as constants
 
-# Create a folder for storing experiment results
-output_folder = '../../outputs'
-output_images_folder = os.path.join(output_folder, 'jpegs')
-output_htmls_folder = os.path.join(output_folder, 'htmls')
+# # Create a folder for storing experiment results
+# output_folder = '../../outputs'
+# output_images_folder = os.path.join(output_folder, 'jpegs')
+# output_htmls_folder = os.path.join(output_folder, 'htmls')
 
-os.makedirs(output_images_folder, exist_ok=True)
-os.makedirs(output_htmls_folder, exist_ok=True)
+# os.makedirs(output_images_folder, exist_ok=True)
+# os.makedirs(output_htmls_folder, exist_ok=True)
 
 # Set plotly as the default plotting backend for pandas
 pd.options.plotting.backend = "plotly"
@@ -1001,12 +1001,12 @@ def plot_number_of_supernets_per_subset(df, scenario_names):
         paper_bgcolor='rgba(255, 255, 255, 1)', 
     )
 
-    html_file_path = os.path.join(output_htmls_folder, 'adoption_rate.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'adoption_rate.html')
+    # fig.write_html(html_file_path)
 
     fig.update_layout(autosize=False, width=900, height=600)
-    jpeg_file_path = os.path.join(output_images_folder, 'adoption_rate.jpeg')
-    pio.write_image(fig, jpeg_file_path)
+    # jpeg_file_path = os.path.join(output_images_folder, 'adoption_rate.jpeg')
+    # pio.write_image(fig, jpeg_file_path)
 
     return fig
 
@@ -1935,7 +1935,7 @@ def plot_treasury_per_subset(df, scenario_names):
 
 
 def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
-    import matplotlib.cm as cm
+    # import matplotlib.cm as cm
 
     color_cycle_traces = itertools.cycle(px.colors.qualitative.D3)
     traces = ["total_inflation_to_validators_usd", "total_txn_fee_to_validators_usd", "total_profit", "validator_hardware_costs"]
@@ -2028,12 +2028,12 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    html_file_path = os.path.join(output_htmls_folder, 'validator_profit_breakdown_in_usd.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'validator_profit_breakdown_in_usd.html')
+    # fig.write_html(html_file_path)
 
     fig.update_layout(autosize=False, width=900, height=600)
-    jpeg_file_path = os.path.join(output_images_folder, 'validator_profit_breakdown_in_usd.jpeg')
-    pio.write_image(fig, jpeg_file_path)
+    # jpeg_file_path = os.path.join(output_images_folder, 'validator_profit_breakdown_in_usd.jpeg')
+    # pio.write_image(fig, jpeg_file_path)
 
     return fig
 
@@ -2195,7 +2195,7 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
 
 
 def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
-    import matplotlib.cm as cm
+    # import matplotlib.cm as cm
 
     color_cycle_traces = itertools.cycle(px.colors.qualitative.D3)
     traces = ["total_inflation_to_validators_yields_pct", "total_txn_fee_to_validators_yields_pct", "total_profit_yields_pct", "validator_hardware_costs_yields_pct"]
@@ -2288,8 +2288,8 @@ def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    html_file_path = os.path.join(output_htmls_folder, 'validator_profit_breakdown_in_yield.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'validator_profit_breakdown_in_yield.html')
+    # fig.write_html(html_file_path)
 
     return fig
 
@@ -2404,8 +2404,8 @@ def plot_token_price(df):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    html_file_path = os.path.join(output_htmls_folder, 'token_price.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'token_price.html')
+    # fig.write_html(html_file_path)
 
     return fig
 
@@ -2848,8 +2848,8 @@ def plot_slashing_amount_per_subset(df, scenario_names):
 
     fig.update_layout(hovermode="x unified")
 
-    html_file_path = os.path.join(output_htmls_folder, 'slashable_amount.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'slashable_amount.html')
+    # fig.write_html(html_file_path)
 
     return fig
 
@@ -3084,12 +3084,12 @@ def plot_treasury_balance(df):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    html_file_path = os.path.join(output_htmls_folder, 'treasury_inflow.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'treasury_inflow.html')
+    # fig.write_html(html_file_path)
 
     fig.update_layout(autosize=False, width=900, height=600)
-    jpeg_file_path = os.path.join(output_images_folder, 'treasury_inflow.jpeg')
-    pio.write_image(fig, jpeg_file_path)
+    # jpeg_file_path = os.path.join(output_images_folder, 'treasury_inflow.jpeg')
+    # pio.write_image(fig, jpeg_file_path)
 
     return fig
 
@@ -3219,12 +3219,12 @@ def plot_validator_emission_model(df):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    html_file_path = os.path.join(output_htmls_folder, 'Validator_emission_model.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'Validator_emission_model.html')
+    # fig.write_html(html_file_path)
 
     fig.update_layout(autosize=False, width=900, height=600)
-    jpeg_file_path = os.path.join(output_images_folder, 'Validator_emission_model.jpeg')
-    pio.write_image(fig, jpeg_file_path)
+    # jpeg_file_path = os.path.join(output_images_folder, 'Validator_emission_model.jpeg')
+    # pio.write_image(fig, jpeg_file_path)
 
     return fig
 
@@ -3282,11 +3282,11 @@ def plot_treasury_emission_model(df):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    html_file_path = os.path.join(output_htmls_folder, 'Treasury_emission_model.html')
-    fig.write_html(html_file_path)
+    # html_file_path = os.path.join(output_htmls_folder, 'Treasury_emission_model.html')
+    # fig.write_html(html_file_path)
 
     fig.update_layout(autosize=False, width=900, height=600)
-    jpeg_file_path = os.path.join(output_images_folder, 'Treasury_emission_model.jpeg')
-    pio.write_image(fig, jpeg_file_path)
+    # jpeg_file_path = os.path.join(output_images_folder, 'Treasury_emission_model.jpeg')
+    # pio.write_image(fig, jpeg_file_path)
     
     return fig
