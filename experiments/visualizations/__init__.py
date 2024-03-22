@@ -1,16 +1,12 @@
 import itertools
 import math
 from datetime import datetime
-import os 
 
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-import plotly.io as pio
-# from ipywidgets import widgets
 from plotly.subplots import make_subplots
-from plotly.colors import n_colors
 
 from experiments.visualizations.plotly_theme import (
     cadlabs_colors,
@@ -19,13 +15,6 @@ from experiments.visualizations.plotly_theme import (
 from model.system_parameters import parameters, validator_environments
 import model.constants as constants
 
-# # Create a folder for storing experiment results
-# output_folder = '../../outputs'
-# output_images_folder = os.path.join(output_folder, 'jpegs')
-# output_htmls_folder = os.path.join(output_folder, 'htmls')
-
-# os.makedirs(output_images_folder, exist_ok=True)
-# os.makedirs(output_htmls_folder, exist_ok=True)
 
 # Set plotly as the default plotting backend for pandas
 pd.options.plotting.backend = "plotly"
@@ -218,7 +207,15 @@ def plot_validator_incentives_pie_chart(df):
         "Sync Reward",
     ]
 
-    fig = go.Figure(data=[go.Pie(labels=labels, values=list(validator_rewards.values()), pull=[0.2, 0.2, 0, 0, 0, 0, 0])])
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                labels=labels,
+                values=list(validator_rewards.values()),
+                pull=[0.2, 0.2, 0, 0, 0, 0, 0],
+            )
+        ]
+    )
 
     fig.for_each_trace(
         lambda trace: trace.update(
@@ -694,7 +691,7 @@ def fig_add_stage_markers(df, column, fig, secondary_y=None, parameters=paramete
         ("Proof of Stake", parameters["date_pos"][0]),
     ]
 
-    for (name, date, (ay, ax)) in historical_dates:
+    for name, date, (ay, ax) in historical_dates:
         nearest_row = df.iloc[
             df.index.get_loc(date.strftime("%Y-%m-%d"), method="nearest")
         ]
@@ -722,7 +719,6 @@ def fig_add_stage_markers(df, column, fig, secondary_y=None, parameters=paramete
             ]
             x_datetime = nearest_row["timestamp"][0]
             y_value = nearest_row[column][0]
-                
 
         fig.add_trace(
             go.Scatter(
@@ -962,8 +958,22 @@ def plot_eth_staked_over_all_stages(df):
 
     return fig
 
+
 def plot_number_of_supernets_per_subset(df, scenario_names):
-    color_cycle = itertools.cycle(['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'])
+    color_cycle = itertools.cycle(
+        [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+        ]
+    )
     fig = go.Figure()
 
     for subset in df.subset.unique():
@@ -993,51 +1003,31 @@ def plot_number_of_supernets_per_subset(df, scenario_names):
         ),
         hovermode="x unified",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
-
-    # html_file_path = os.path.join(output_htmls_folder, 'adoption_rate.html')
-    # fig.write_html(html_file_path)
-
     fig.update_layout(autosize=False, width=900, height=600)
-    # jpeg_file_path = os.path.join(output_images_folder, 'adoption_rate.jpeg')
-    # pio.write_image(fig, jpeg_file_path)
+
 
     return fig
 
 
-# def plot_number_of_public_chains_per_subset(df, scenario_names):
-#     fig = go.Figure()
-
-#     for subset in df.subset.unique():
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=df["timestamp"],
-#                 y=df[df.subset == subset]["PUBLIC_CHAINS_CNT"],
-#                 name=scenario_names[subset],
-#             )
-#         )
-
-#     fig.update_layout(
-#         title="Public Chains Adoption Scenarios",
-#         xaxis_title="Date",
-#         yaxis_title="Total Public Chains Number",
-#         legend_title="",
-#         xaxis=dict(rangeslider=dict(visible=True)),
-#     )
-#     fig.update_layout(hovermode="x unified")
-#     fig.write_html('/Users/wenxuan/Desktop/polygon/cadCAD/Token-Redesign/experiments/notebooks/visualizations/plots/adoption_rate_public.html')
-
-
-#     return fig
-
 def plot_number_of_public_chains_per_subset(df, scenario_names):
-    color_cycle = itertools.cycle(['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'])
+    color_cycle = itertools.cycle(
+        [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+        ]
+    )
     fig = go.Figure()
 
     for subset in df.subset.unique():
@@ -1067,23 +1057,13 @@ def plot_number_of_public_chains_per_subset(df, scenario_names):
         ),
         hovermode="x unified",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
-    # html_file_path = os.path.join(output_htmls_folder, 'adoption_rate_public.html')
-    # fig.write_html(html_file_path)
-
     fig.update_layout(autosize=False, width=900, height=600)
-    # jpeg_file_path = os.path.join(output_images_folder, 'adoption_rate_public.jpeg')
-    # pio.write_image(fig, jpeg_file_path)
-    
     return fig
-
 
 
 def plot_number_of_validators_in_activation_queue_over_time(df):
@@ -1112,7 +1092,6 @@ def plot_number_of_validators_in_activation_queue_over_time(df):
     fig.update_layout(
         title="Number of Validators in Activation Queue Over Time",
         xaxis_title="Date",
-        
     )
 
     fig.update_yaxes(title_text="Number of Validators", secondary_y=False)
@@ -1122,97 +1101,21 @@ def plot_number_of_validators_in_activation_queue_over_time(df):
 
     return fig
 
-
-# def plot_yields_per_subset_subplots(df, subplot_titles=[]):
-#     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
-
-#     fig = make_subplots(
-#         rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
-#     )
-
-#     for subset in df.subset.unique():
-#         color = next(color_cycle)
-#         # fig.add_trace(
-#         #     go.Scatter(
-#         #         x=df["timestamp"],
-#         #         y=df[df.subset == subset]["total_revenue_yields_pct"],
-#         #         name="Revenue Yields",
-#         #         line=dict(color=color),
-#         #         showlegend=False,
-#         #     ),
-#         #     row=1,
-#         #     col=subset + 1,
-#         # )
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=df["timestamp"],
-#                 y=df[df.subset == subset]["total_profit_yields_pct"],
-#                 name="Validator Yields",
-#                 line=dict(color=color, dash="dash"),
-#                 showlegend=False,
-#             ),
-#             row=1,
-#             col=subset + 1,
-#         )
-
-
-#     for subset in df.subset.unique():
-#         fig.add_shape(
-#             go.layout.Shape(
-#                 type="line",
-#                 x0=df.loc[1,["timestamp"]].values,
-#                 y0=0,
-#                 x1=df.tail(1)['timestamp'].values,
-#                 y1=0,
-#                 line=dict(color='red',width=6,dash="dashdot"),
-#             ),
-#             row=1,
-#             col=subset + 1,
-#         )
-
-
-#     # Add uncoloured legend for traces
-#     # fig.add_trace(
-#     #     go.Scatter(
-#     #         x=df["timestamp"],
-#     #         y=[None],
-#     #         mode="lines",
-#     #         line=dict(color="black"),
-#     #         name="Revenue Yields",
-#     #     )
-#     # )
-#     fig.add_trace(
-#         go.Scatter(
-#             x=df["timestamp"],
-#             y=[None],
-#             mode="lines",
-#             line=dict(color="black", dash="dash"),
-#             name="Validator Yields",
-#         )
-#     )
-
-#     fig.update_layout(
-#         title="Validator Yields Over Time - At a Glance",
-#         xaxis_title="Date",
-#         yaxis_title="Yields (%/year)",
-#         legend_title="",
-#         hovermode="x",
-#     )
-
-#     fig.for_each_xaxis(lambda x: x.update(dict(title=dict(text="Date"))))
-
-#     # Removes the 'subset=' from the facet_col title
-#     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-
-#     update_legend_names(fig)
-#     fig.update_annotations(font_size=12)
-#     fig.write_html('/Users/wenxuan/Desktop/polygon/cadCAD/Token-Redesign/experiments/notebooks/visualizations/plots/validator_yields.html')
-
-
-#     return fig
-
 def plot_yields_per_subset_subplots(df, scenario_names):
-    color_cycle = itertools.cycle(['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'])
+    color_cycle = itertools.cycle(
+        [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+        ]
+    )
     fig = go.Figure()
 
     for subset in df.subset.unique():
@@ -1222,7 +1125,7 @@ def plot_yields_per_subset_subplots(df, scenario_names):
                 x=df[df.subset == subset]["timestamp"],
                 y=df[df.subset == subset]["total_profit_yields_pct"],
                 name=scenario_names[subset],
-                line=dict(color=color,dash='dot'),
+                line=dict(color=color, dash="dot"),
             )
         )
 
@@ -1242,21 +1145,13 @@ def plot_yields_per_subset_subplots(df, scenario_names):
         ),
         hovermode="x unified",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)',
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     update_legend_names(fig)
-    # html_file_path = os.path.join(output_htmls_folder, 'validator_yields.html')
-    # fig.write_html(html_file_path)
-
     fig.update_layout(autosize=False, width=900, height=600)
-    # jpeg_file_path = os.path.join(output_images_folder, 'validator_yields.jpeg')
-    # pio.write_image(fig, jpeg_file_path)
 
     return fig
 
@@ -1296,11 +1191,11 @@ def plot_yields_per_staking_mode(df, subplot_titles=[]):
         fig.add_shape(
             go.layout.Shape(
                 type="line",
-                x0=df.loc[1,["timestamp"]].values,
+                x0=df.loc[1, ["timestamp"]].values,
                 y0=0,
-                x1=df.tail(1)['timestamp'].values,
+                x1=df.tail(1)["timestamp"].values,
                 y1=0,
-                line=dict(color='red',width=6,dash="dashdot"),
+                line=dict(color="red", width=6, dash="dashdot"),
             ),
             row=1,
             col=subset + 1,
@@ -1342,6 +1237,7 @@ def plot_yields_per_staking_mode(df, subplot_titles=[]):
     update_legend_names(fig)
 
     return fig
+
 
 def plot_yields_per_subset(df, scenario_names):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
@@ -1419,12 +1315,11 @@ def plot_cumulative_yields_per_subset(df, DELTA_TIME, scenario_names):
     for subset in df.subset.unique():
         df_subset = df.query(f"subset == {subset}").copy()
 
-        df_subset["daily_revenue_yields_pct"] = (
-            df_subset["total_revenue_yields_pct"] / (constants.epochs_per_year / DELTA_TIME)
-        )
-        df_subset["daily_profit_yields_pct"] = (
-
-            df_subset["total_profit_yields_pct"] / (constants.epochs_per_year / DELTA_TIME)
+        df_subset["daily_revenue_yields_pct"] = df_subset[
+            "total_revenue_yields_pct"
+        ] / (constants.epochs_per_year / DELTA_TIME)
+        df_subset["daily_profit_yields_pct"] = df_subset["total_profit_yields_pct"] / (
+            constants.epochs_per_year / DELTA_TIME
         )
 
         df_subset["cumulative_revenue_yields_pct"] = (
@@ -1525,11 +1420,13 @@ def plot_cumulative_revenue_yields_per_subset(df, scenario_names):
 
 
 def plot_stacked_cumulative_column_per_subset(df, column, scenario_names):
-    color_cycle = itertools.cycle([
-        "#782AB6",
-        "#1C8356",
-        "#F6222E",
-    ])
+    color_cycle = itertools.cycle(
+        [
+            "#782AB6",
+            "#1C8356",
+            "#F6222E",
+        ]
+    )
 
     fig = go.Figure()
 
@@ -1543,7 +1440,7 @@ def plot_stacked_cumulative_column_per_subset(df, column, scenario_names):
                 y=df_subset[column],
                 name=f"{scenario_names[subset]}",
                 line=dict(color=color),
-                stackgroup='one',
+                stackgroup="one",
             ),
         )
 
@@ -1557,7 +1454,7 @@ def plot_stacked_cumulative_column_per_subset(df, column, scenario_names):
             ),
             rangeslider_thickness=0.15,
             type="date",
-        )
+        ),
     )
 
     return fig
@@ -1709,16 +1606,18 @@ def plot_figure_widget_revenue_yields_over_time_foreach_subset(df):
 
 
 def plot_revenue_yields_rolling_mean(df):
-    
-    rolling_window = df.groupby('timestamp')['total_revenue_yields_pct'].mean().rolling(7)
+
+    rolling_window = (
+        df.groupby("timestamp")["total_revenue_yields_pct"].mean().rolling(7)
+    )
     df_rolling = pd.DataFrame()
-    df_rolling['rolling_std'] = rolling_window.std()
-    df_rolling['rolling_mean'] = rolling_window.mean()
-    df_rolling['max'] = df.groupby('timestamp')['total_revenue_yields_pct'].max()
-    df_rolling['min'] = df.groupby('timestamp')['total_revenue_yields_pct'].min()
+    df_rolling["rolling_std"] = rolling_window.std()
+    df_rolling["rolling_mean"] = rolling_window.mean()
+    df_rolling["max"] = df.groupby("timestamp")["total_revenue_yields_pct"].max()
+    df_rolling["min"] = df.groupby("timestamp")["total_revenue_yields_pct"].min()
     df_rolling = df_rolling.fillna(method="ffill")
     df_rolling = df_rolling.reset_index()
-    
+
     fig = go.Figure(
         [
             go.Scatter(
@@ -1866,6 +1765,7 @@ def plot_network_issuance_scenarios(df, simulation_names):
 
     return fig
 
+
 def plot_treasury_per_subset(df, scenario_names):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
@@ -1938,7 +1838,12 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
     # import matplotlib.cm as cm
 
     color_cycle_traces = itertools.cycle(px.colors.qualitative.D3)
-    traces = ["total_inflation_to_validators_usd", "total_txn_fee_to_validators_usd", "total_profit", "validator_hardware_costs"]
+    traces = [
+        "total_inflation_to_validators_usd",
+        "total_txn_fee_to_validators_usd",
+        "total_profit",
+        "validator_hardware_costs",
+    ]
     trace_colors = {name: next(color_cycle_traces) for name in traces}
     trace_names = {
         "total_inflation_to_validators_usd": "Validator issuance revenue (USD)",
@@ -1953,14 +1858,14 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
         "validator_hardware_costs": "dot",
     }
 
-
-
     def rgba_to_rgb_str(rgba):
-        return f'rgb({int(rgba[0]*255)}, {int(rgba[1]*255)}, {int(rgba[2]*255)})'
-
+        return f"rgb({int(rgba[0]*255)}, {int(rgba[1]*255)}, {int(rgba[2]*255)})"
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for i, subset in enumerate(df.subset.unique(), start=1):
@@ -1974,7 +1879,7 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
                     showlegend=False,  # Do not show legend for each subplot
                 ),
                 row=1,
-                col=i
+                col=i,
             )
 
     # Add a single legend for all subplots
@@ -1991,15 +1896,15 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
             col=1,
         )
 
-
     fig.update_layout(
         title={
-            'text': "Validator Profits (USD) - Breakdown",
-            'y':0.9,
-            'x':0.5,
-            'xanchor': 'center',
-            'yanchor': 'top'},
-        #xaxis_title="Date",
+            "text": "Validator Profits (USD) - Breakdown",
+            "y": 0.9,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        },
+        # xaxis_title="Date",
         yaxis_title="USD",
         legend=dict(
             orientation="h",  # Horizontal orientation
@@ -2014,12 +1919,9 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
         ),
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="#7f7f7f"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Courier New, monospace", size=18, color="#7f7f7f"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     fig.for_each_xaxis(lambda x: x.update(dict(title=dict(text="Date"))))
@@ -2028,177 +1930,22 @@ def plot_validator_yields_breakdown_usd(df, subplot_titles=[]):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    # html_file_path = os.path.join(output_htmls_folder, 'validator_profit_breakdown_in_usd.html')
-    # fig.write_html(html_file_path)
-
     fig.update_layout(autosize=False, width=900, height=600)
-    # jpeg_file_path = os.path.join(output_images_folder, 'validator_profit_breakdown_in_usd.jpeg')
-    # pio.write_image(fig, jpeg_file_path)
+
 
     return fig
-
-
-
-
-# def plot_validator_checkpoint_costs_yields(df, subplot_titles=[]):
-#     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
-
-#     fig = make_subplots(
-#         rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
-#     )
-
-#     for subset in df.subset.unique():
-#         color = next(color_cycle)
-#         # fig.add_trace(
-#         #     go.Scatter(
-#         #         x=df["timestamp"],
-#         #         y=df[df.subset == subset]["validator_checkpoint_costs_yields_pct"],
-#         #         name="Validator Checkpoints Costs",
-#         #         line=dict(color=color),
-#         #         showlegend=False,
-#         #     ),
-#         #     row=1,
-#         #     col=subset + 1,
-#         # )
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=df["timestamp"],
-#                 y=df[df.subset == subset]["total_inflation_to_validators_yields_pct"],
-#                 name="Validator issuance revenue (yield)",
-#                 line=dict(color='green', dash="dash"),
-#                 showlegend=False,
-#             ),
-#             row=1,
-#             col=subset + 1,
-#         )
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=df["timestamp"],
-#                 y=df[df.subset == subset]["total_txn_fee_to_validators_yields_pct"],
-#                 name="Validator fees revenue (yield)",
-#                 line=dict(color='green', dash="dot"),
-#                 showlegend=False,
-#             ),
-#             row=1,
-#             col=subset + 1,
-#         )
-#         # fig.add_trace(
-#         #     go.Scatter(
-#         #         x=df["timestamp"],
-#         #         y=df[df.subset == subset]["total_revenue_yields_pct"],
-#         #         name="Total revenue",
-#         #         line=dict(color='grey', dash="dot"),
-#         #         showlegend=False,
-#         #     ),
-#         #     row=1,
-#         #     col=subset + 1,
-#         # )
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=df["timestamp"],
-#                 y=df[df.subset == subset]["total_profit_yields_pct"],
-#                 name="Validator yield",
-#                 line=dict(color='grey', width=4, dash="dot"),
-#                 showlegend=False,
-#             ),
-#             row=1,
-#             col=subset + 1,
-#         )
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=df["timestamp"],
-#                 y=df[df.subset == subset]["validator_hardware_costs_yields_pct"],
-#                 name="Validator running costs (yield)",
-#                 line=dict(color='red', width=4, dash="dot"),
-#                 showlegend=False,
-#             ),
-#             row=1,
-#             col=subset + 1,
-#         )
-
-#     # Add uncoloured legend for traces
-#     # fig.add_trace(
-#     #     go.Scatter(
-#     #         x=df["timestamp"],
-#     #         y=[None],
-#     #         mode="lines",
-#     #         line=dict(color="black"),
-#     #         name="Validator Checkpoints Costs",
-#     #     )
-#     # )
-#     fig.add_trace(
-#         go.Scatter(
-#             x=df["timestamp"],
-#             y=[None],
-#             mode="lines",
-#             line=dict(color="green", dash="dash"),
-#             name="Validator issuance revenue (yield)",
-#         )
-#     )
-#     fig.add_trace(
-#         go.Scatter(
-#             x=df["timestamp"],
-#             y=[None],
-#             mode="lines",
-#             line=dict(color="green", dash="dot"),
-#             name="Validator fees revenue (yield)",
-#         )
-#     )
-#     # fig.add_trace(
-#     #     go.Scatter(
-#     #         x=df["timestamp"],
-#     #         y=[None],
-#     #         mode="lines",
-#     #         line=dict(color="grey", dash="dot"),
-#     #         name="Total revenue",
-#     #     )
-#     # )
-#     fig.add_trace(
-#         go.Scatter(
-#             x=df["timestamp"],
-#             y=[None],
-#             mode="lines",
-#             line=dict(color="grey", width=4, dash="dot"),
-#             name="Validator yield",
-#         )
-#     )
-#     fig.add_trace(
-#         go.Scatter(
-#             x=df["timestamp"],
-#             y=[None],
-#             mode="lines",
-#             line=dict(color="red", width=4, dash="dot"),
-#             name="Validator running costs (yield)",
-#         )
-#     )
-
-#     fig.update_layout(
-#         title="Validator Yields - Breakdown",
-#         xaxis_title="Date",
-#         yaxis_title="Yields (%/year)",
-#         legend_title="",
-#         hovermode="x",
-#     )
-
-#     fig.for_each_xaxis(lambda x: x.update(dict(title=dict(text="Date"))))
-
-#     # Removes the 'subset=' from the facet_col title
-#     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-
-#     update_legend_names(fig)
-
-#     fig.update_annotations(font_size=9)
-#     fig.write_html('/Users/wenxuan/Desktop/polygon/cadCAD/Token-Redesign/experiments/notebooks/visualizations/plots/validator_profit_breakdown_in_yield.html')
-
-
-#     return fig
 
 
 def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
     # import matplotlib.cm as cm
 
     color_cycle_traces = itertools.cycle(px.colors.qualitative.D3)
-    traces = ["total_inflation_to_validators_yields_pct", "total_txn_fee_to_validators_yields_pct", "total_profit_yields_pct", "validator_hardware_costs_yields_pct"]
+    traces = [
+        "total_inflation_to_validators_yields_pct",
+        "total_txn_fee_to_validators_yields_pct",
+        "total_profit_yields_pct",
+        "validator_hardware_costs_yields_pct",
+    ]
     trace_colors = {name: next(color_cycle_traces) for name in traces}
     trace_names = {
         "total_inflation_to_validators_yields_pct": "Validator issuance revenue (USD)",
@@ -2213,14 +1960,14 @@ def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
         "validator_hardware_costs_yields_pct": "dot",
     }
 
-
-
     def rgba_to_rgb_str(rgba):
-        return f'rgb({int(rgba[0]*255)}, {int(rgba[1]*255)}, {int(rgba[2]*255)})'
-
+        return f"rgb({int(rgba[0]*255)}, {int(rgba[1]*255)}, {int(rgba[2]*255)})"
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for i, subset in enumerate(df.subset.unique(), start=1):
@@ -2234,7 +1981,7 @@ def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
                     showlegend=False,  # Do not show legend for each subplot
                 ),
                 row=1,
-                col=i
+                col=i,
             )
 
     # Add a single legend for all subplots
@@ -2251,15 +1998,15 @@ def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
             col=1,
         )
 
-
     fig.update_layout(
         title={
-            'text': "Validator Yields - Breakdown",
-            'y':0.9,
-            'x':0.5,
-            'xanchor': 'center',
-            'yanchor': 'top'},
-        #xaxis_title="Date",
+            "text": "Validator Yields - Breakdown",
+            "y": 0.9,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        },
+        # xaxis_title="Date",
         yaxis_title="USD",
         legend=dict(
             orientation="h",  # Horizontal orientation
@@ -2274,12 +2021,9 @@ def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
         ),
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="#7f7f7f"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Courier New, monospace", size=18, color="#7f7f7f"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     fig.for_each_xaxis(lambda x: x.update(dict(title=dict(text="Date"))))
@@ -2288,17 +2032,18 @@ def plot_validator_yields_breakdown_yields(df, subplot_titles=[]):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    # html_file_path = os.path.join(output_htmls_folder, 'validator_profit_breakdown_in_yield.html')
-    # fig.write_html(html_file_path)
-
     return fig
+
 
 # Token Price
 def plot_token_price_per_subset(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2314,7 +2059,6 @@ def plot_token_price_per_subset(df, subplot_titles=[]):
             row=1,
             col=subset + 1,
         )
-        
 
     # Add uncoloured legend for traces
     fig.add_trace(
@@ -2326,7 +2070,6 @@ def plot_token_price_per_subset(df, subplot_titles=[]):
             name="Token Price",
         )
     )
-    
 
     fig.update_layout(
         title="Validator Costs and Rewards",
@@ -2345,22 +2088,23 @@ def plot_token_price_per_subset(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_token_price(df):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
     fig = go.Figure()
 
     color = next(color_cycle)
     fig.add_trace(
-            go.Scatter(
-                x=df["timestamp"],
-                y=df[df.subset == 0]["polygn_price"],
-                name="polygn_price",
-                line=dict(color=color),
-                showlegend=False,
-                hoverinfo='x+y',
-            ),
-        )
-        
+        go.Scatter(
+            x=df["timestamp"],
+            y=df[df.subset == 0]["polygn_price"],
+            name="polygn_price",
+            line=dict(color=color),
+            showlegend=False,
+            hoverinfo="x+y",
+        ),
+    )
+
     # Add uncoloured legend for traces
     fig.add_trace(
         go.Scatter(
@@ -2369,33 +2113,26 @@ def plot_token_price(df):
             mode="lines",
             line=dict(color="black"),
             name="Token Price",
-            hoverinfo='x',
+            hoverinfo="x",
         )
     )
-    
+
     fig.update_layout(
         title={
-            'text': "POLYGN Token Price",
-            'y':0.9,
-            'x':0.5,
-            'xanchor': 'center',
-            'yanchor': 'top'},
+            "text": "POLYGN Token Price",
+            "y": 0.9,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        },
         xaxis_title="Date",
         yaxis_title="USD",
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="#7f7f7f"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Courier New, monospace", size=18, color="#7f7f7f"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     fig.for_each_xaxis(lambda x: x.update(dict(title=dict(text="Date"))))
@@ -2404,11 +2141,7 @@ def plot_token_price(df):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    # html_file_path = os.path.join(output_htmls_folder, 'token_price.html')
-    # fig.write_html(html_file_path)
-
     return fig
-
 
 
 def plot_revenue_profit_yields_over_issuance_curves(df):
@@ -2416,7 +2149,6 @@ def plot_revenue_profit_yields_over_issuance_curves(df):
 
     df_subset_0 = df.query("subset == 0")
     df_subset_1 = df.query("subset == 1")
-
 
     # Add traces
     fig.add_trace(
@@ -2435,7 +2167,6 @@ def plot_revenue_profit_yields_over_issuance_curves(df):
             line=dict(color=cadlabs_colorway_sequence[4], dash="dash"),
         ),
     )
-
 
     fig.add_trace(
         go.Scatter(
@@ -2469,12 +2200,16 @@ def plot_revenue_profit_yields_over_issuance_curves(df):
 
     return fig
 
+
 ## staking centralization
 def plot_total_top_51_control_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2509,11 +2244,15 @@ def plot_total_top_51_control_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_total_top_33_control_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2548,11 +2287,15 @@ def plot_total_top_33_control_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_gini_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2587,11 +2330,15 @@ def plot_gini_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_hhi_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2626,11 +2373,15 @@ def plot_hhi_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_multichain_attack_51_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2665,11 +2416,15 @@ def plot_multichain_attack_51_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_multichain_attack_33_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2704,11 +2459,15 @@ def plot_multichain_attack_33_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_monoply_51_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2743,11 +2502,15 @@ def plot_monoply_51_per_subset_subplots(df, subplot_titles=[]):
 
     return fig
 
+
 def plot_monoply_33_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2847,17 +2610,17 @@ def plot_slashing_amount_per_subset(df, scenario_names):
     )
 
     fig.update_layout(hovermode="x unified")
-
-    # html_file_path = os.path.join(output_htmls_folder, 'slashable_amount.html')
-    # fig.write_html(html_file_path)
-
     return fig
+
 
 def plot_rewards_by_validator_group_per_subset_subplots(df, subplot_titles=[]):
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2865,7 +2628,9 @@ def plot_rewards_by_validator_group_per_subset_subplots(df, subplot_titles=[]):
         fig.add_trace(
             go.Scatter(
                 x=df["timestamp"],
-                y=df[df.subset == subset]["total_inflation_to_validators_normal_yields"],
+                y=df[df.subset == subset][
+                    "total_inflation_to_validators_normal_yields"
+                ],
                 name="normal",
                 line=dict(color=color),
                 showlegend=False,
@@ -2876,7 +2641,9 @@ def plot_rewards_by_validator_group_per_subset_subplots(df, subplot_titles=[]):
         fig.add_trace(
             go.Scatter(
                 x=df["timestamp"],
-                y=df[df.subset == subset]["total_inflation_to_validators_deviate_yields"],
+                y=df[df.subset == subset][
+                    "total_inflation_to_validators_deviate_yields"
+                ],
                 name="deviate",
                 line=dict(color=color, dash="dash"),
                 showlegend=False,
@@ -2896,21 +2663,19 @@ def plot_rewards_by_validator_group_per_subset_subplots(df, subplot_titles=[]):
             col=subset + 1,
         )
 
-
     for subset in df.subset.unique():
         fig.add_shape(
             go.layout.Shape(
                 type="line",
-                x0=df.loc[1,["timestamp"]].values,
+                x0=df.loc[1, ["timestamp"]].values,
                 y0=0,
-                x1=df.tail(1)['timestamp'].values,
+                x1=df.tail(1)["timestamp"].values,
                 y1=0,
-                line=dict(color='red',width=6,dash="dashdot"),
+                line=dict(color="red", width=6, dash="dashdot"),
             ),
             row=1,
             col=subset + 1,
         )
-
 
     # Add uncoloured legend for traces
     fig.add_trace(
@@ -2964,7 +2729,10 @@ def plot_rewards_usd_by_validator_group_per_subset_subplots(df, subplot_titles=[
     color_cycle = itertools.cycle(cadlabs_colorway_sequence)
 
     fig = make_subplots(
-        rows=1, cols=len(subplot_titles), shared_yaxes=True, subplot_titles=subplot_titles
+        rows=1,
+        cols=len(subplot_titles),
+        shared_yaxes=True,
+        subplot_titles=subplot_titles,
     )
 
     for subset in df.subset.unique():
@@ -2992,21 +2760,19 @@ def plot_rewards_usd_by_validator_group_per_subset_subplots(df, subplot_titles=[
             col=subset + 1,
         )
 
-
     for subset in df.subset.unique():
         fig.add_shape(
             go.layout.Shape(
                 type="line",
-                x0=df.loc[1,["timestamp"]].values,
+                x0=df.loc[1, ["timestamp"]].values,
                 y0=0,
-                x1=df.tail(1)['timestamp'].values,
+                x1=df.tail(1)["timestamp"].values,
                 y1=0,
-                line=dict(color='red',width=6,dash="dashdot"),
+                line=dict(color="red", width=6, dash="dashdot"),
             ),
             row=1,
             col=subset + 1,
         )
-
 
     # Add uncoloured legend for traces
     fig.add_trace(
@@ -3048,34 +2814,44 @@ def plot_rewards_usd_by_validator_group_per_subset_subplots(df, subplot_titles=[
 
 
 def plot_treasury_balance(df):
-    color_cycle = itertools.cycle(['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'])
+    color_cycle = itertools.cycle(
+        [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+        ]
+    )
     fig = go.Figure()
 
     color = next(color_cycle)
     fig.add_trace(
-            go.Scatter(
-                x=df["timestamp"],
-                #y=df[df.subset == 0]["cumulative_treasury_balance_usd"],
-                y=df[df.subset == 0]["annual_treasury_inflow"],
-                #y=df[df.subset == 0]["total_inflation_to_validators_usd"],
-                name="Treasury balance",
-                line=dict(color=color),
-                showlegend=False,
-                hoverinfo='x+y',
-            ),
-        )
-    
+        go.Scatter(
+            x=df["timestamp"],
+            # y=df[df.subset == 0]["cumulative_treasury_balance_usd"],
+            y=df[df.subset == 0]["annual_treasury_inflow"],
+            # y=df[df.subset == 0]["total_inflation_to_validators_usd"],
+            name="Treasury balance",
+            line=dict(color=color),
+            showlegend=False,
+            hoverinfo="x+y",
+        ),
+    )
+
     fig.update_layout(
         xaxis_title="Time",
         yaxis_title="Annual Treasury Inflow",
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     fig.for_each_xaxis(lambda x: x.update(dict(title=dict(text="Date"))))
@@ -3084,41 +2860,55 @@ def plot_treasury_balance(df):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    # html_file_path = os.path.join(output_htmls_folder, 'treasury_inflow.html')
-    # fig.write_html(html_file_path)
 
     fig.update_layout(autosize=False, width=900, height=600)
-    # jpeg_file_path = os.path.join(output_images_folder, 'treasury_inflow.jpeg')
-    # pio.write_image(fig, jpeg_file_path)
 
     return fig
 
 
 def plot_treasury_balance_barplot(df):
-    color_cycle = itertools.cycle(['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'])
+    color_cycle = itertools.cycle(
+        [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#7f7f7f",
+            "#bcbd22",
+            "#17becf",
+        ]
+    )
     fig = go.Figure()
-    annual_treasury_inflow =  df[df.subset == 0].groupby(['year'])['total_inflation_to_validators_usd'].sum().reset_index()
-    fig = px.bar(annual_treasury_inflow, x='year', y='total_inflation_to_validators_usd', barmode='group',color_discrete_sequence=['#1f77b4'])
-    
+    annual_treasury_inflow = (
+        df[df.subset == 0]
+        .groupby(["year"])["total_inflation_to_validators_usd"]
+        .sum()
+        .reset_index()
+    )
+    fig = px.bar(
+        annual_treasury_inflow,
+        x="year",
+        y="total_inflation_to_validators_usd",
+        barmode="group",
+        color_discrete_sequence=["#1f77b4"],
+    )
+
     fig.update_layout(
         xaxis_title="Time",
         yaxis_title="Annual Treasury Inflow",
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
-
     update_legend_names(fig)
-    # fig.write_html('../../outputs/htmls/treasury_inflow_barplot.html')
 
     fig.update_layout(autosize=False, width=900, height=600)
-    # pio.write_image(fig, '../../outputs/jpegs/treasury_inflow_barplot.jpeg')
 
     return fig
 
@@ -3128,19 +2918,25 @@ def create_emission_df():
     # Define the duration
     start_date = datetime.today()
     end_date = start_date.replace(year=start_date.year + 15)
-    dates = pd.date_range(start=start_date, end=end_date, freq='M')
+    dates = pd.date_range(start=start_date, end=end_date, freq="M")
 
     # Initialize the DataFrame
     df = pd.DataFrame(index=dates)
-    df.index.name = 'timestamp'
+    df.index.name = "timestamp"
 
     # Define the inflation rates for the first 10 years
-    first_10_years = (df.index.year - start_date.year < 10)
+    first_10_years = df.index.year - start_date.year < 10
 
-    df['option_1'] = 0.01  # Option 1: The inflation rate remains at 1% for the entire duration
-    df.loc[first_10_years, 'option_2'] = 0.01  # Option 2: The inflation rate is 1% for the first 10 years
-    df.loc[first_10_years, 'option_3'] = 0.01  # Option 3: The inflation rate is 1% for the first 10 years
-    df.loc[first_10_years,'curve_group'] = 0
+    df["option_1"] = (
+        0.01  # Option 1: The inflation rate remains at 1% for the entire duration
+    )
+    df.loc[first_10_years, "option_2"] = (
+        0.01  # Option 2: The inflation rate is 1% for the first 10 years
+    )
+    df.loc[first_10_years, "option_3"] = (
+        0.01  # Option 3: The inflation rate is 1% for the first 10 years
+    )
+    df.loc[first_10_years, "curve_group"] = 0
 
     # Define the inflation rates for the last 5 years
     last_5_years = ~first_10_years
@@ -3149,17 +2945,22 @@ def create_emission_df():
     date_series = pd.Series(df.index)
 
     # Calculate the years into last 5 years
-    years_into_last_5 = (df.index[last_5_years].year - df.index[last_5_years].year.min()) + \
-                        (df.index[last_5_years].month - df.index[last_5_years].month.min()) / 12
+    years_into_last_5 = (
+        df.index[last_5_years].year - df.index[last_5_years].year.min()
+    ) + (df.index[last_5_years].month - df.index[last_5_years].month.min()) / 12
 
     # Option 2: The inflation rate decreases quadratically
-    df.loc[last_5_years, 'option_2'] = np.maximum(0.01 * (1 - (years_into_last_5 / 7) ** 2),0)
+    df.loc[last_5_years, "option_2"] = np.maximum(
+        0.01 * (1 - (years_into_last_5 / 7) ** 2), 0
+    )
 
     # Option 3: The inflation rate decreases exponentially
-    df.loc[last_5_years, 'option_3'] = np.maximum(0.01 * (1 - (years_into_last_5 / 3) ** 2),0)
+    df.loc[last_5_years, "option_3"] = np.maximum(
+        0.01 * (1 - (years_into_last_5 / 3) ** 2), 0
+    )
 
     # mark the last 5 years as curve group 1
-    df.loc[last_5_years,'curve_group'] = 1
+    df.loc[last_5_years, "curve_group"] = 1
 
     df.reset_index(level=0, inplace=True)
 
@@ -3171,48 +2972,49 @@ def plot_validator_emission_model(df):
 
     for i in range(3):
         # Split the data into two parts
-        df_first_10_years = df[df['timestamp'].dt.year - df['timestamp'].dt.year.min() < 10]
-        df_last_5_years = df[df['timestamp'].dt.year - df['timestamp'].dt.year.min() >= 10]
+        df_first_10_years = df[
+            df["timestamp"].dt.year - df["timestamp"].dt.year.min() < 10
+        ]
+        df_last_5_years = df[
+            df["timestamp"].dt.year - df["timestamp"].dt.year.min() >= 10
+        ]
 
         # Add the trace for the first 10 years with a solid line
         fig.add_trace(
-                go.Scatter(
-                    x=df_first_10_years["timestamp"],
-                    y=df_first_10_years[f'option_{i+1}'],
-                    name="Inflation Model " + str(i+1),
-                    line=dict(color='red'),
-                    showlegend=False,
-                ),
-            )
-        
+            go.Scatter(
+                x=df_first_10_years["timestamp"],
+                y=df_first_10_years[f"option_{i+1}"],
+                name="Inflation Model " + str(i + 1),
+                line=dict(color="red"),
+                showlegend=False,
+            ),
+        )
+
         # Add the trace for the last 5 years with a dotted line
         fig.add_trace(
-                go.Scatter(
-                    x=df_last_5_years["timestamp"],
-                    y=df_last_5_years[f'option_{i+1}'],
-                    name="Inflation Model " + str(i+1),
-                    line=dict(color='red',dash='dot'),
-                    showlegend=False,
-                ),
-            )
-    
+            go.Scatter(
+                x=df_last_5_years["timestamp"],
+                y=df_last_5_years[f"option_{i+1}"],
+                name="Inflation Model " + str(i + 1),
+                line=dict(color="red", dash="dot"),
+                showlegend=False,
+            ),
+        )
+
     fig.update_layout(
         xaxis_title="Time",
         yaxis_title="Validator Emission",
         yaxis=dict(
-            tickmode='array',
+            tickmode="array",
             tickvals=[0.005, 0.01, 0.015],
-            ticktext=['0.5%', '1.0%', '1.5%'],
-            range=[0, 0.016]
+            ticktext=["0.5%", "1.0%", "1.5%"],
+            range=[0, 0.016],
         ),
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     # Removes the 'subset=' from the facet_col title
@@ -3234,59 +3036,55 @@ def plot_treasury_emission_model(df):
 
     for i in range(3):
         # Split the data into two parts
-        df_first_10_years = df[df['timestamp'].dt.year - df['timestamp'].dt.year.min() < 10]
-        df_last_5_years = df[df['timestamp'].dt.year - df['timestamp'].dt.year.min() >= 10]
+        df_first_10_years = df[
+            df["timestamp"].dt.year - df["timestamp"].dt.year.min() < 10
+        ]
+        df_last_5_years = df[
+            df["timestamp"].dt.year - df["timestamp"].dt.year.min() >= 10
+        ]
 
         # Add the trace for the first 10 years with a solid line
         fig.add_trace(
-                go.Scatter(
-                    x=df_first_10_years["timestamp"],
-                    y=df_first_10_years[f'option_{i+1}'],
-                    name="Inflation Model " + str(i+1),
-                    line=dict(color='#1f77b4'),
-                    showlegend=False,
-                ),
-            )
-        
+            go.Scatter(
+                x=df_first_10_years["timestamp"],
+                y=df_first_10_years[f"option_{i+1}"],
+                name="Inflation Model " + str(i + 1),
+                line=dict(color="#1f77b4"),
+                showlegend=False,
+            ),
+        )
+
         # Add the trace for the last 5 years with a dotted line
         fig.add_trace(
-                go.Scatter(
-                    x=df_last_5_years["timestamp"],
-                    y=df_last_5_years[f'option_{i+1}'],
-                    name="Inflation Model " + str(i+1),
-                    line=dict(color='#1f77b4',dash='dot'),
-                    showlegend=False,
-                ),
-            )
-    
+            go.Scatter(
+                x=df_last_5_years["timestamp"],
+                y=df_last_5_years[f"option_{i+1}"],
+                name="Inflation Model " + str(i + 1),
+                line=dict(color="#1f77b4", dash="dot"),
+                showlegend=False,
+            ),
+        )
+
     fig.update_layout(
         xaxis_title="Time",
         yaxis_title="Treasury Emission",
         yaxis=dict(
-            tickmode='array',
+            tickmode="array",
             tickvals=[0.005, 0.01, 0.015],
-            ticktext=['0.5%', '1.0%', '1.5%'],
-            range=[0, 0.016]
+            ticktext=["0.5%", "1.0%", "1.5%"],
+            range=[0, 0.016],
         ),
         hovermode="x",
         template="plotly_white",
-        font=dict(
-            family="Arial",
-            size=18,
-            color="black"),
-        plot_bgcolor='rgba(255, 255, 255, 1)', 
-        paper_bgcolor='rgba(255, 255, 255, 1)', 
+        font=dict(family="Arial", size=18, color="black"),
+        plot_bgcolor="rgba(255, 255, 255, 1)",
+        paper_bgcolor="rgba(255, 255, 255, 1)",
     )
 
     # Removes the 'subset=' from the facet_col title
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     update_legend_names(fig)
-    # html_file_path = os.path.join(output_htmls_folder, 'Treasury_emission_model.html')
-    # fig.write_html(html_file_path)
-
     fig.update_layout(autosize=False, width=900, height=600)
-    # jpeg_file_path = os.path.join(output_images_folder, 'Treasury_emission_model.jpeg')
-    # pio.write_image(fig, jpeg_file_path)
-    
+
     return fig

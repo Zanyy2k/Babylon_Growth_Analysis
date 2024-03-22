@@ -198,21 +198,9 @@ pio.templates["cadlabs_frontend"] = go.layout.Template(
         "zerolinecolor": "#3C3D56",
         "zerolinewidth": 3,
     },
-    layout_colorscale={"sequential": cadlabs_colors}
+    layout_colorscale={"sequential": cadlabs_colors},
 )
 
 
 # Set this to one of the custom themes above to change default
 pio.templates.default = "cadlabs"
-
-# Legend at bottom of chart
-# pio.templates["cadlabs"].layout.legend = dict(
-#     title=dict(
-#         text="",
-#     ),
-#     orientation="h",
-#     yanchor="bottom",
-#     y=-0.7,
-#     xanchor="center",
-#     x=0.5,
-# )

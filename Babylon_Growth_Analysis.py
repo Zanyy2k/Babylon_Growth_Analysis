@@ -1,47 +1,54 @@
 import streamlit as st
 import json
 
-st.write("# Welcome to Babyon Growth Analysis! 👋")
+st.write("# Welcome to Babyon ! 👋")
 
 # initial supply of bbn
+st.write("#### Initial Supply")
 initial_supply_bbn = st.number_input(
     "Please Enter the Initial Supply of BBN (B) : ", value=21
 )
 st.write("Initial Supply of BBN : ", f"{initial_supply_bbn} B")
 
-# yearly emissions cap for validator incentives
-pct_yearly_emission_validator_incentives_cap = float(
-    st.text_input(
-        "Please Enter the yearly emission cap for Validator Incentives (%) : ",
-        value=2.0,
+# input yearly emissions
+st.write("#### Yearly Emissions")
+with st.expander("Yearly Emissions"):
+    # yearly emissions cap for validator incentives
+    pct_yearly_emission_validator_incentives_cap = float(
+        st.text_input(
+            "Please Enter the yearly emission cap for Validator Incentives (%) : ",
+            value=2.0,
+        )
     )
-)
-# st.sidebar.write("Pct of Validator Incentives Cap : ", f'{pct_yearly_emission_validator_incentives_cap}%')
+    # st.sidebar.write("Pct of Validator Incentives Cap : ", f'{pct_yearly_emission_validator_incentives_cap}%')
 
-# yearly emissions cap for community treasury
-pct_yearly_emission_community_treasury_cap = float(
-    st.text_input(
-        "Please Enter the yearly emission cap for Community Treasury (%) : ", value=2.0
+    # yearly emissions cap for community treasury
+    pct_yearly_emission_community_treasury_cap = float(
+        st.text_input(
+            "Please Enter the yearly emission cap for Community Treasury (%) : ",
+            value=2.0,
+        )
     )
-)
-# st.sidebar.write("Pct of Community Treasury Cap : ", f'{pct_yearly_emission_community_treasury_cap}%')
+    # st.sidebar.write("Pct of Community Treasury Cap : ", f'{pct_yearly_emission_community_treasury_cap}%')
 
-# total yearly emissions cap
-pct_yearly_emission_cap = (
-    pct_yearly_emission_validator_incentives_cap
-    + pct_yearly_emission_community_treasury_cap
-)
-st.markdown(
-    f"Total Pct of yearly emission cap for the first decade : **{pct_yearly_emission_cap} %**"
-)
+    # total yearly emissions cap
+    pct_yearly_emission_cap = (
+        pct_yearly_emission_validator_incentives_cap
+        + pct_yearly_emission_community_treasury_cap
+    )
+    st.markdown(
+        f"Total Pct of yearly emission cap for the first decade : **{pct_yearly_emission_cap} %**"
+    )
 
 # number of validators
+st.write("#### Validators")
 num_validators = st.number_input(
     "Please Enter the Number of Validators : ", min_value=1, value=100, step=1
 )
 st.write("Number of Validators : ", num_validators)
 
 # operational cost per year per validator
+st.write("#### Operation Cost")
 operational_cost = st.number_input(
     "Please Enter the operational cost per Year per Validator ($) : ",
     min_value=0.0,
@@ -51,6 +58,7 @@ operational_cost = st.number_input(
 st.write("Operational Cost : $", operational_cost)
 
 # minimum percentage of supply staked
+st.write("#### Staking Parameters")
 pct_min_supply_staked = float(
     st.text_input(
         "Please Enter the Minimum Percentage of Supply Staked (%) : ", value=35.0
@@ -71,5 +79,8 @@ user_input_dict = {
 with open("config.json", "w") as json_file:
     json.dump(user_input_dict, json_file)
 
-if st.button("Run"):
-    st.switch_page("pages/Incentive_Scenarios.py")
+
+if st.button("No Rewards Policy"):
+    st.switch_page("pages/no_rewards_policy.py")
+# if st.button("Maintain APY Policy"):
+#     st.switch_page("pages/maintain_apy_policy.py")

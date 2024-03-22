@@ -20,5 +20,4 @@ def p_service(chain_cnt):
 
 
 def n_user(validator_cnt):
-    return np.clip(np.random.normal(90,30, size = validator_cnt), 30, 100)
-
+    return np.clip(np.random.normal(90, 30, size=validator_cnt), 30, 100)

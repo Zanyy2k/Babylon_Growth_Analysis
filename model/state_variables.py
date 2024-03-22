@@ -29,7 +29,6 @@ from model.types import (
     Stage,
     List,
 )
-from data.historical_values import eth_price_mean, eth_price_min, eth_price_max
 from model.stochastic_processes import create_intial_state_risk_service_validator
 
 import json
