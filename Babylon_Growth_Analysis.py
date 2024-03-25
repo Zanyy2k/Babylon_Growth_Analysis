@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 
-st.write("# Welcome to Babyon Growth Analysis ! 👋")
+st.write("# Welcome to Babyon Tokenomics ! 👋")
 
 # initial supply of bbn
 st.write("#### Initial Supply")
