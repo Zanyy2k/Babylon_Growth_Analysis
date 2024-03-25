@@ -4,10 +4,11 @@ import copy
 import importlib
 
 import model.constants as constants
+import new_economic as new_adoption
 from experiments.run import run
+from experiments.default_experiment import experiment
 import experiments.visualizations as visualizations
 
-import new_economic as new_adoption
 
 start_time = time.time()
 
@@ -47,8 +48,11 @@ with st.spinner(text="In progress..."):
         hardware_cost_moores_law,
     )
 
-    # store this simulation as no_rewards_simulation
-    no_rewards_simulation = copy.deepcopy(new_adoption.experiment.simulations[0])
+    # Make a copy of the default experiment to avoid mutation
+    no_reward_experiment = copy.deepcopy(experiment)
+
+    # store this experiemnt simulation as no_rewards_simulation
+    no_rewards_simulation = no_reward_experiment.simulations[0]
     print("no_rewards_simulation : ", no_rewards_simulation)
 
     # override default experiment Simulation and System Parameters related to timing
