@@ -14,7 +14,6 @@ from datetime import datetime
 
 import model.constants as constants
 
-# from Babylon_Growth_Analysis import user_input_dict
 import data.api.validator_staking as validator_staking
 import model.system_parameters as system_parameters
 from model.system_parameters import validator_environments

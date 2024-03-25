@@ -227,6 +227,7 @@ def create_intial_state_risk_service_validator(
             matrix_restaking[i][
                 non_zero_indices
             ] = n  # replace selected zeros with non-zero values
+            
     ## Randomize staking metrics for liquidity fragmentation (SingleStaking) mode
     # Initialize an empty matrix
     sum_per_node = matrix_restaking.sum(axis=0)
