@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 
-st.write("# Welcome to Babyon ! 👋")
+st.write("# Welcome to Babyon Growth Analysis ! 👋")
 
 # initial supply of bbn
 st.write("#### Initial Supply")
@@ -79,8 +79,25 @@ user_input_dict = {
 with open("config.json", "w") as json_file:
     json.dump(user_input_dict, json_file)
 
+st.write("#### Incentive Policy (Mandatory)")
+incentive_policy_option = st.selectbox(
+    "Which Incentive Policy Scenario would you like to Simulate?",
+    (
+        "No Rewards",
+        "Maintain APY",
+        "Maintain APY & Price",
+        "Maintain APY & Price with Tokens",
+    ),
+    index=None,
+    placeholder="Select Incentive Policy...",
+)
 
-if st.button("No Rewards Policy"):
-    st.switch_page("pages/no_rewards_policy.py")
-# if st.button("Maintain APY Policy"):
-#     st.switch_page("pages/maintain_apy_policy.py")
+st.write("You selected:", incentive_policy_option)
+
+
+st.markdown("***")
+if st.button("RUN SIMULATION"):
+    if incentive_policy_option == "No Rewards":
+        st.switch_page("pages/No_Rewards_Policy.py")
+    elif incentive_policy_option == "Maintain APY":
+        st.switch_page("pages/Maintain_APY_Policy.py")
